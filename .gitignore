@@ -1,0 +1,10 @@
+argocd-env-plugin
+RELEASE_CHANGELOG.md
+bin
+.DS_Store
+test
+cover.out
+
+# Project workspaces
+.idea
+.vscode
