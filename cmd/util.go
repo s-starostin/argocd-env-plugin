@@ -47,16 +47,22 @@ func isFlagPassed(name string) bool {
 func listYamlFiles(root string) ([]string, error) {
 	var files []string
 
-	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-	    fmt.Errorf("xxx %s", filepath.Ext(path))
-		if filepath.Ext(path) == ".yaml" || filepath.Ext(path) == ".yml" {
-			files = append(files, path)
-		}
-		return nil
-	})
+	path, err := filepath.Abs(root)
 	if err != nil {
-		return files, err
-	}
+        return files, err
+    }
+
+    fileInfo, err := ioutil.ReadDir(root)
+    if err != nil {
+        return files, err
+    }
+
+    for _, file := range fileInfo {
+        filename := file.Name()
+		if filepath.Ext(filename) == ".yaml" || filepath.Ext(filename) == ".yml" {
+			files = append(files, filepath.Join(path,filename))
+		}
+    }
 
 	return files, nil
 }
