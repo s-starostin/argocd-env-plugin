@@ -48,7 +48,7 @@ func listYamlFiles(root string) ([]string, error) {
 	var files []string
 
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-	    fmt.Errorf("xxx %s", filepath)
+	    fmt.Errorf("xxx %s", filepath.Ext(path))
 		if filepath.Ext(path) == ".yaml" || filepath.Ext(path) == ".yml" {
 			files = append(files, path)
 		}
