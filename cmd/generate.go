@@ -104,7 +104,7 @@ func NewGenerateCommand() *cobra.Command {
 					return err
 				}
 
-				output, err := yaml.Marshal(manifest)
+				output, err := yaml.Marshal(manifest.Object)
 	            if err != nil {
 		            fmt.Errorf("could not export %s into YAML: %s", err)
 	            }
