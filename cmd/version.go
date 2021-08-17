@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/s-starostin/argocd-env-plugin/version"
+	"argocd-env-plugin/version"
 	"github.com/spf13/cobra"
 )
 

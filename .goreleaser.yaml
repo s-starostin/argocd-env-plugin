@@ -5,9 +5,9 @@ builds:
     flags: "-trimpath"
     ldflags: >-
       -s -w
-      -X "github.com/s-starostin/argocd-env-plugin/version.Version={{.Tag}}"
-      -X "github.com/s-starostin/argocd-env-plugin/version.BuildDate={{.Date}}"
-      -X "github.com/s-starostin/argocd-env-plugin/version.CommitSHA={{.Commit}}"
+      -X "argocd-env-plugin/version.Version={{.Tag}}"
+      -X "argocd-env-plugin/version.BuildDate={{.Date}}"
+      -X "argocd-env-plugin/version.CommitSHA={{.Commit}}"
     env:
       - "CGO_ENABLED=0"
     goos:

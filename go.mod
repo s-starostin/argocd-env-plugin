@@ -1,4 +1,4 @@
-module github.com/s-starostin/argocd-env-plugin
+module argocd-env-plugin
 
 go 1.16
 

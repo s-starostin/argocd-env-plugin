@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/s-starostin/argocd-env-plugin/cmd"
+	"argocd-env-plugin/cmd"
 )
 
 func main() {
