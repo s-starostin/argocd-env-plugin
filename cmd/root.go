@@ -16,7 +16,7 @@ func NewRootCommand() *cobra.Command {
 
 	generateCommand := NewGenerateCommand()
 	command.AddCommand(generateCommand)
-    generateCommand.Flags().StringP("path", "p", "", "a path to directory with manifests")
+	generateCommand.Flags().StringP("path", "p", "", "a path to directory with manifests")
 	generateCommand.Flags().StringP("include-paths", "i", "", "additional paths with manifests")
 	command.AddCommand(NewVersionCommand())
 

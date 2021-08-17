@@ -4,37 +4,37 @@ import (
 	"fmt"
 	"strings"
 
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"github.com/spf13/cobra"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	yaml "sigs.k8s.io/yaml"
 )
 
 type Config struct {
-    includePaths []string
-    path string
+	includePaths []string
+	path         string
 }
 
 func getConfig(cmd *cobra.Command) *Config {
-    const delimiter = ":"
-    path, _ := cmd.Flags().GetString("path")
-    includePaths, _ := cmd.Flags().GetString("include-paths")
+	const delimiter = ":"
+	path, _ := cmd.Flags().GetString("path")
+	includePaths, _ := cmd.Flags().GetString("include-paths")
 
-    return &Config{
-	    includePaths: func() []string {
-	        if len(includePaths) > 0 {
-	            return strings.Split(includePaths, delimiter)
-	        } else {
-	            return getEnvAsSlice("AEP_INCLUDE_PATHS", []string{}, delimiter)
-	        }
-	    }(),
-	    path: func() string {
-	        if len(path) > 0 {
-	            return path
-	        } else {
-	            return getEnv("AEP_PATH", "-")
-	        }
-	    }(),
-    }
+	return &Config{
+		includePaths: func() []string {
+			if len(includePaths) > 0 {
+				return strings.Split(includePaths, delimiter)
+			} else {
+				return getEnvAsSlice("AEP_INCLUDE_PATHS", []string{}, delimiter)
+			}
+		}(),
+		path: func() string {
+			if len(path) > 0 {
+				return path
+			} else {
+				return getEnv("AEP_PATH", "-")
+			}
+		}(),
+	}
 }
 
 // NewGenerateCommand initializes the generate command
@@ -45,8 +45,8 @@ func NewGenerateCommand() *cobra.Command {
 		Use:   "generate --path=<path> --include-paths=<additional path>:<additional path>",
 		Short: "Merge manifests from different paths",
 		Long: "This is an Argo CD plugin to merge multiple manifests from different paths together.\r\n" +
-		    "Instead of specifing CLI params for primary and additional manifest paths," +
-            "you can use environment variables AEP_PATH and AEP_INCLUDE_PATHS.",
+			"Instead of specifing CLI params for primary and additional manifest paths," +
+			"you can use environment variables AEP_PATH and AEP_INCLUDE_PATHS.",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var manifests []unstructured.Unstructured
 			var err error
@@ -76,22 +76,22 @@ func NewGenerateCommand() *cobra.Command {
 			}
 
 			if len(conf.includePaths) > 0 {
-			    var addManifests []unstructured.Unstructured
+				var addManifests []unstructured.Unstructured
 
-			    for _, path := range conf.includePaths {
-			        files, err := listYamlFiles(path)
-			        if len(files) < 1 {
-					    continue
-				    }
-				    if err != nil {
-					    return err
-				    }
-				    addManifests, errs = readFilesAsManifests(files)
-				    if len(errs) != 0 {
-					    return fmt.Errorf("could not read YAML files: %s", errs)
-				    }
-				    manifests = append(manifests, addManifests...)
-			    }
+				for _, path := range conf.includePaths {
+					files, err := listYamlFiles(path)
+					if len(files) < 1 {
+						continue
+					}
+					if err != nil {
+						return err
+					}
+					addManifests, errs = readFilesAsManifests(files)
+					if len(errs) != 0 {
+						return fmt.Errorf("could not read YAML files: %s", errs)
+					}
+					manifests = append(manifests, addManifests...)
+				}
 			}
 
 			for _, manifest := range manifests {
@@ -105,9 +105,9 @@ func NewGenerateCommand() *cobra.Command {
 				}
 
 				output, err := yaml.Marshal(manifest.Object)
-	            if err != nil {
-		            fmt.Errorf("could not export %s into YAML: %s", err)
-	            }
+				if err != nil {
+					fmt.Errorf("could not export %s into YAML: %s", err)
+				}
 
 				fmt.Fprintf(cmd.OutOrStdout(), "%s---\n", string(output))
 			}

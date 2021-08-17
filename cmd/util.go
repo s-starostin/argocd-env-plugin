@@ -2,46 +2,46 @@ package cmd
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
-	"flag"
 
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	k8yaml "k8s.io/apimachinery/pkg/util/yaml"
 )
 
 func getEnvAsSlice(name string, defaultVal []string, sep string) []string {
-    valStr := getEnv(name, "")
+	valStr := getEnv(name, "")
 
-    if valStr == "" {
-	    return defaultVal
-    }
+	if valStr == "" {
+		return defaultVal
+	}
 
-    val := strings.Split(valStr, sep)
+	val := strings.Split(valStr, sep)
 
-    return val
+	return val
 }
 
 func getEnv(key string, defaultVal string) string {
-    if value, exists := os.LookupEnv(key); exists {
-	    return value
-    }
+	if value, exists := os.LookupEnv(key); exists {
+		return value
+	}
 
-    return defaultVal
+	return defaultVal
 }
 
 func isFlagPassed(name string) bool {
-    found := false
-    flag.Visit(func(f *flag.Flag) {
-        if f.Name == name {
-            found = true
-        }
-    })
-    return found
+	found := false
+	flag.Visit(func(f *flag.Flag) {
+		if f.Name == name {
+			found = true
+		}
+	})
+	return found
 }
 
 func listYamlFiles(root string) ([]string, error) {
@@ -49,20 +49,20 @@ func listYamlFiles(root string) ([]string, error) {
 
 	path, err := filepath.Abs(root)
 	if err != nil {
-        return files, err
-    }
+		return files, err
+	}
 
-    fileInfo, err := ioutil.ReadDir(root)
-    if err != nil {
-        return files, err
-    }
+	fileInfo, err := ioutil.ReadDir(root)
+	if err != nil {
+		return files, err
+	}
 
-    for _, file := range fileInfo {
-        filename := file.Name()
+	for _, file := range fileInfo {
+		filename := file.Name()
 		if filepath.Ext(filename) == ".yaml" || filepath.Ext(filename) == ".yml" {
-			files = append(files, filepath.Join(path,filename))
+			files = append(files, filepath.Join(path, filename))
 		}
-    }
+	}
 
 	return files, nil
 }
