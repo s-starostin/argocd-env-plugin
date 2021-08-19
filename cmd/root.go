@@ -8,7 +8,10 @@ import (
 func NewRootCommand() *cobra.Command {
 	var command = &cobra.Command{
 		Use:   "argocd-env-plugin",
-		Short: "This is a plugin to add aditional manifests",
+		Short: "Merge manifests from different paths",
+		Long: "This is an Argo CD plugin to merge multiple manifests from different paths together.\r\n" +
+			"Instead of specifing CLI params for primary and additional manifest paths," +
+			"you can use environment variables AEP_PATH and AEP_INCLUDE_PATHS.",
 		Run: func(cmd *cobra.Command, args []string) {
 			cmd.HelpFunc()(cmd, args)
 		},

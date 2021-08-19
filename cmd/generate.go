@@ -43,10 +43,6 @@ func NewGenerateCommand() *cobra.Command {
 
 	var command = &cobra.Command{
 		Use:   "generate --path=<path> --include-paths=<additional path>:<additional path>",
-		Short: "Merge manifests from different paths",
-		Long: "This is an Argo CD plugin to merge multiple manifests from different paths together.\r\n" +
-			"Instead of specifing CLI params for primary and additional manifest paths," +
-			"you can use environment variables AEP_PATH and AEP_INCLUDE_PATHS.",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var manifests []unstructured.Unstructured
 			var err error
